@@ -1,0 +1,17 @@
+# Set up VPC using data defined in vars.yml
+
+- name:		Create VPC
+  ec2_vpc:
+    state:		present
+    resource_tags:	{ "Name":"{{ vpc_name }}", }
+    cidr_block:		"{{ vpc_net }}"
+    subnets:		"{{ vpc_subnets }}"
+    route_tables:	"{{ vpc_route }}"
+    internet_gateway: 	true
+  register:	vpc
+
+- name:		Save VPC ID
+  set_fact:
+    vpc_id:	"{{ vpc.vpc.id }}"
+    
+    

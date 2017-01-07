@@ -1,0 +1,24 @@
+---
+
+# VPC settings
+
+vpc_name:	"jacob-vpc"
+vpc_net:	"10.2.2.0/24"
+vpc_subnet_1:	"10.2.2.0/26"
+
+# Security group settings
+
+allow_ip:	"74.96.251.86"
+
+# Subnet settings
+
+vpc_subnets:
+   - cidr: "{{ vpc_subnet_1 }}"
+     resource_tags: { "Name":"{{ vpc_name }}-subnet-1" }
+
+vpc_route:
+   - subnets:
+       - "{{ vpc_subnet_1 }}"
+     routes:
+       - dest: 0.0.0.0/0
+         gw: igw
