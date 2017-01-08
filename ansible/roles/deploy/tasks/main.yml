@@ -1,0 +1,10 @@
+
+- name:		Enable EPEL
+  command: 	yum-config-manager --enable epel
+  become: 	true
+  
+- name:		Install SIPP
+  yum:		
+    name:	sipp
+    state:	present
+  become:	true

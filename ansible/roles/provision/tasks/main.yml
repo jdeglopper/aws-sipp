@@ -45,24 +45,17 @@
       wait:	true 
       region:	"{{ aws_region }}"
       keypair:	"{{ keyname }}"
-      count:	"{{count}}"
+      exact_count:	"{{count}}"
+      instance_tags:
+        Name: sipp
+      count_tag:
+        Name: sipp
   register: ec2
 
 - name: Wait for SSH to come up
   wait_for:
-    host:	"{{ item }}"
+    host:	"{{ item.dns_name }}"
     port:	22 
     state:	started
-  with_items: "{{ ec2.instances.dns_name }}"
+  with_items: "{{ ec2.tagged_instances }}"
 
-#- name: Add tag to Instance(s)
-#  ec2_tag:
-#         resource:	"{{ item.id }}"
-#         region:	"{{ region }}"
-#         state:		present
-#  with_items: ec2.instances
-#      args:
-#      tags:
-#      Name: "sipp test"
-#
-#
