@@ -2,6 +2,7 @@
 
 - hosts: local
   roles:
-    - vpc
+    - provision
   vars_files:
     - vars.yml
+    
