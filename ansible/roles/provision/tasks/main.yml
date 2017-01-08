@@ -11,15 +11,21 @@
     internet_gateway: 	true
   register:	vpc
 
+
 - name:		Save VPC ID
   set_fact:
     vpc_id:	"{{ vpc.vpc.id }}"
-    
+
+- name:         Save subnet ID
+  set_fact:
+    subnet_id:	"{{ vpc.subnets.0.id }}"
+
 - name:		Create security group
   ec2_group:
     name:	"{{ sg_name }}"
     description:	"Remote access to SIP test servers"
     region:	"{{ aws_region }}"
+    vpc_id:	"{{ vpc_id }}"
     rules:
             - proto: tcp
               from_port: 22
@@ -30,6 +36,14 @@
               cidr_ip: 0.0.0.0/0
   register: sg
 
+- name:		Tag security group
+  ec2_tag:
+    resource:	"{{ sg.group_id }}"
+    region:	"{{ aws_region }}"
+    state:	present
+    tags:
+      Name:	"{{ sg_name }}"
+
 - name:	Load local SSH keys
   ec2_key:
     name:	"{{ keyname }}"
@@ -39,17 +53,19 @@
 
 - name: Launch EC2 Instances
   ec2:
-      group:	"{{ sg_name }}" 
+      group:		"{{ sg_name }}" 
       instance_type:	"{{ instance }}" 
-      image:	"{{ ami }}" 
-      wait:	true 
-      region:	"{{ aws_region }}"
-      keypair:	"{{ keyname }}"
-      exact_count:	"{{count}}"
+      image:		"{{ ami }}" 
+      wait:		true 
+      region:		"{{ aws_region }}"
+      keypair:		"{{ keyname }}"
+      vpc_subnet_id:	"{{ subnet_id }}"
+      assign_public_ip:	true
+      exact_count:	"{{ count }}"
       instance_tags:
-        Name: sipp
+        Name: jacob-sipp
       count_tag:
-        Name: sipp
+        Name: jacob-sipp
   register: ec2
 
 - name: Wait for SSH to come up

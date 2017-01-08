@@ -5,6 +5,6 @@
   
 - name:		Install SIPP
   yum:		
-    name:	sipp
+    name:	https://dl.fedoraproject.org/pub/epel/7/x86_64/s/sipp-3.5.0-3.el7.x86_64.rpm
     state:	present
   become:	true

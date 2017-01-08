@@ -1,0 +1,14 @@
+- name: Terminate EC2 Instances
+  ec2:
+      group:	"{{ sg_name }}" 
+      instance_type:	"{{ instance }}" 
+      image:	"{{ ami }}" 
+      wait:	false
+      region:	"{{ aws_region }}"
+      keypair:	"{{ keyname }}"
+      exact_count:	"0"
+      instance_tags:
+        Name: jacob-sipp
+      count_tag:
+        Name: jacob-sipp
+  register: ec2
