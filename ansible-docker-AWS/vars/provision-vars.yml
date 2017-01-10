@@ -1,0 +1,37 @@
+---
+
+# VPC settings
+
+aws_region:	"us-east-1"
+aws_az:		"{{ aws_region }}b"
+
+vpc_name:	"jacob-vpc"
+vpc_net:	"10.2.2.0/24"
+vpc_subnet_1:	"10.2.2.0/26"
+
+# Subnet settings
+
+vpc_subnets:
+   - cidr:	"{{ vpc_subnet_1 }}"
+     az:	"{{ aws_az }}"
+     resource_tags: { "Name":"{{ vpc_name }}-subnet-1" }
+
+vpc_route:
+   - subnets:
+       - "{{ vpc_subnet_1 }}"
+     routes:
+       - dest: 0.0.0.0/0
+         gw: igw
+
+# Security group settings
+
+allow_ip:	"74.96.251.86"
+sg_name:	"jacob-vpc-sg"
+
+# EC2 settings
+
+ami:		"ami-9be6f38c"  # Amazon Linux 2016.09.1 US East N. Virginia
+instance:	"m4.large"
+count:		"2"
+keyname:	"jacob-key"
+

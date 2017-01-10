@@ -1,0 +1,9 @@
+---
+
+- hosts: local
+  tasks:
+    - name: List instance IDs
+      debug:
+        var: hostvars
+
+    

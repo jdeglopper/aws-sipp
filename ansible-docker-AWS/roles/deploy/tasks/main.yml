@@ -1,0 +1,21 @@
+
+- name:		Enable EPEL
+  command: 	yum-config-manager --enable epel
+  become: 	true
+
+- name:		Clear yum cache
+  command:	yum clean all
+
+- name:		Install docker
+  yum:		
+    name:	docker
+    state:	latest
+  become:	true
+
+- name:		Add EC2 user to docker group
+  user:
+    name:	ec2-user
+    groups:	docker
+    append:	true
+  become:	true
+  

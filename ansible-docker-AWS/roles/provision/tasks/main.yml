@@ -1,0 +1,79 @@
+# Set up VPC using data defined in vars.yml
+
+- name:		Create VPC
+  ec2_vpc:
+    state:		present
+    region:		"{{ aws_region }}"
+    resource_tags:	{ "Name":"{{ vpc_name }}", }
+    cidr_block:		"{{ vpc_net }}"
+    subnets:		"{{ vpc_subnets }}"
+    route_tables:	"{{ vpc_route }}"
+    internet_gateway: 	true
+  register:	vpc
+
+
+- name:		Save VPC ID
+  set_fact:
+    vpc_id:	"{{ vpc.vpc.id }}"
+
+- name:         Save subnet ID
+  set_fact:
+    subnet_id:	"{{ vpc.subnets.0.id }}"
+
+- name:		Create security group
+  ec2_group:
+    name:	"{{ sg_name }}"
+    description:	"Remote access to SIP test servers"
+    region:	"{{ aws_region }}"
+    vpc_id:	"{{ vpc_id }}"
+    rules:
+            - proto: tcp
+              from_port: 22
+              to_port: 22
+              cidr_ip: 0.0.0.0/0
+            - proto: all
+              cidr_ip: "{{ vpc_net }}"
+    rules_egress:
+            - proto: all
+              cidr_ip: 0.0.0.0/0
+  register: sg
+
+- name:		Tag security group
+  ec2_tag:
+    resource:	"{{ sg.group_id }}"
+    region:	"{{ aws_region }}"
+    state:	present
+    tags:
+      Name:	"{{ sg_name }}"
+
+- name:	Load local SSH keys
+  ec2_key:
+    name:	"{{ keyname }}"
+    region:	"{{ aws_region }}"
+    key_material: "{{ item }}"
+  with_file: 	"~/.ssh/id_rsa.pub"
+
+- name: Launch EC2 Instances
+  ec2:
+      group:		"{{ sg_name }}" 
+      instance_type:	"{{ instance }}" 
+      image:		"{{ ami }}" 
+      wait:		true 
+      region:		"{{ aws_region }}"
+      keypair:		"{{ keyname }}"
+      vpc_subnet_id:	"{{ subnet_id }}"
+      assign_public_ip:	true
+      exact_count:	"{{ count }}"
+      instance_tags:
+        Name: jacob-sipp
+      count_tag:
+        Name: jacob-sipp
+  register: ec2
+
+- name: Wait for SSH to come up
+  wait_for:
+    host:	"{{ item.dns_name }}"
+    port:	22 
+    state:	started
+  with_items: "{{ ec2.tagged_instances }}"
+

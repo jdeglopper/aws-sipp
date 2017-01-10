@@ -1,0 +1,8 @@
+---
+
+- hosts: all
+  roles:
+    - deploy
+  vars_files:
+    - vars/deploy-vars.yml
+    
