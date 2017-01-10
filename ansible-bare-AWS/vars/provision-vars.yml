@@ -25,7 +25,6 @@ vpc_route:
 
 # Security group settings
 
-allow_ip:	"74.96.251.86"
 sg_name:	"jacob-vpc-sg"
 
 # EC2 settings
