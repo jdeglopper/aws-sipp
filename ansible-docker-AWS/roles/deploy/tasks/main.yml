@@ -18,4 +18,8 @@
     groups:	docker
     append:	true
   become:	true
-  
+  - name:		Install Wireshark
+  yum:		
+    name:	wireshark
+    state:	present
+  become:	true
