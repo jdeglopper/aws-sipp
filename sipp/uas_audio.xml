@@ -89,9 +89,9 @@
     </action>
   </nop>
 
-  <!-- Pause 30 seconds, which is approximately the duration of the      -->
+  <!-- Pause 60 seconds, which is approximately the duration of the      -->
   <!-- wav file                                                        -->
-  <pause milliseconds="30000"/>
+  <pause milliseconds="60000"/>
 
 
 
