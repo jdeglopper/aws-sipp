@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo sipp -sn uas_audio.xml 
+sudo sipp -sf uas_audio.xml 
