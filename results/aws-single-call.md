@@ -8,4 +8,4 @@
 ==============================================================
 ```
 
-![Jitter at start of single call](https://github.com/jdeglopper/aws-sipp/tree/master/results/aws-single-call.png)
+![Jitter at start of single call](https://raw.githubusercontent.com/jdeglopper/aws-sipp/master/results/aws-single-call.png)
