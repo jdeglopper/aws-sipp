@@ -41,10 +41,12 @@ udp` to capture all UDP traffic.
 
 3. In the second terminal window on the server, run `ifconfig` and note
 the network 10 address displayed, for example
-```
-eth0      Link encap:Ethernet  HWaddr 0E:BE:9C:62:17:56  
+    ```
+
+    eth0      Link encap:Ethernet  HWaddr 0E:BE:9C:62:17:56  
           inet addr:10.2.2.16  Bcast:10.2.2.63  Mask:255.255.255.192
-```
+
+    ```
 
 4. On that same server, `cd sipp` and run `./sipp-server.sh`.  This will run the server until stopped with a test scenario using a media file.
 
