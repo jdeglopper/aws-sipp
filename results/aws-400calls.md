@@ -22,4 +22,4 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size
 
 ```
 
-![Sample jitter of one call out of 400](https://github.com/jdeglopper/aws-sipp/tree/master/results/aws-400calls-sample-jitter.png)
+![Sample jitter of one call out of 400](https://raw.githubusercontent.com/jdeglopper/aws-sipp/master/results/aws-400calls-sample-jitter.png)
