@@ -19,7 +19,6 @@
     state:	present
   become:	true
   with_items:
-    - wireshark
     - tcpdump
     - git
 
