@@ -6,11 +6,16 @@
 - name:		Clear yum cache
   command:	yum clean all
 
-- name:		Install docker
-  yum:		
-    name:	docker
-    state:	latest
+- name:		Install additional packages
+  yum:
+    name:	"{{ item }}"
+    state:	present
   become:	true
+  with_items:
+    - tcpdump
+    - wireshark
+    - git
+    - docker
 
 - name:		Add EC2 user to docker group
   user:
@@ -18,8 +23,4 @@
     groups:	docker
     append:	true
   become:	true
-  - name:		Install Wireshark
-  yum:		
-    name:	wireshark
-    state:	present
-  become:	true
+
