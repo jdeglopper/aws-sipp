@@ -82,9 +82,9 @@ the network 10 address displayed, for example
 5. On the client, `cd aws-sipp/docker/sipp` and run the two scripted
 test scenarios, substituting the internal IP address of the server:
 
-`./docker-client-one-call.sh _10.2.2.16_` will run a single test call
+`./docker-client-one-call.sh 10.2.2.16` will run a single test call
 
-`./docker-client-400calls.sh _10.2.2.16_` will run 400 simultaneous calls`
+`./docker-client-400calls.sh 10.2.2.16` will run 400 simultaneous calls`
 
 
 
