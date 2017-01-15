@@ -36,7 +36,7 @@ servers for you and avoid having the enter the IP address.
 1. Open at least 3 terminal windows; in one of them, `ssh
 ec2-user@`_client_, and in two others, `ssh ec2-user@`_server_
 
-2. In a terminal window on the server, run `sudo tcpdump -s 0 -w udp.pcap
+2. In a terminal window on the server, run `sudo tcpdump -s 512 -w udp.pcap
 udp` to capture all UDP traffic. 
 
 3. In the second terminal window on the server, run `ifconfig` and note
@@ -52,6 +52,40 @@ the network 10 address displayed, for example
 `./sipp-client-one-call.sh  10.2.2.57` using the IP address of the server you determined in step 3.  This will run a single call test.
 
 `./sipp-client.sh 10.2.2.57` Again using the IP address of the server, will run a test at 400 simultaneous calls.
+
+### Testing Docker on AWS instances
+
+Run the ansible deploy in the _ansible-docker-AWS_ directory:
+```
+cd ansible-docker-AWS
+ansible-playbook -i inventory provision.yml
+ansible-playbook -i ec2.py deploy.yml
+```
+Note the external hostnames or IP addresses; again designate one as
+client and one as server.
+
+1. Open at least 3 terminal windows; in one of them, ssh
+ec2-user@_client_, and in two others, ssh ec2-user@_server_
+
+2. In a terminal window on the server, run 
+`sudo tcpdump -s 512 -w udp.pcap udp ` to capture all UDP traffic.
+
+3. In the second terminal window on the server, run ifconfig and note
+the network 10 address displayed, for example
+
+       >   eth0      Link encap:Ethernet  HWaddr 0E:BE:9C:62:17:56
+                 inet addr:10.2.2.16  Bcast:10.2.2.63 Mask:255.255.255.192
+
+4. On the server, `cd aws-sipp/docker/sipp` and run `./docker-server.sh`
+- this will download the image from Docker Hub and run sipp in UAS mode.
+
+5. On the client, `cd aws-sipp/docker/sipp` and run the two scripted
+test scenarios, substituting the internal IP address of the server:
+
+`./docker-client-one-call.sh _10.2.2.16_` will run a single test call
+`./docker-client-400calls.sh _10.2.2.16_` will run 400 simultaneous calls`
+
+
 
 #### Analyze results
 
