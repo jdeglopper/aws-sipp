@@ -76,13 +76,14 @@ the network 10 address displayed, for example
        >   eth0      Link encap:Ethernet  HWaddr 0E:BE:9C:62:17:56
                  inet addr:10.2.2.16  Bcast:10.2.2.63 Mask:255.255.255.192
 
-4. On the server, `cd aws-sipp/docker/sipp` and run `./docker-server.sh`
-- this will download the image from Docker Hub and run sipp in UAS mode.
+4. On the server, `cd aws-sipp/docker/sipp` and run
+`./docker-server.sh`. This will download the image from Docker Hub and run sipp in UAS mode.
 
 5. On the client, `cd aws-sipp/docker/sipp` and run the two scripted
 test scenarios, substituting the internal IP address of the server:
 
 `./docker-client-one-call.sh _10.2.2.16_` will run a single test call
+
 `./docker-client-400calls.sh _10.2.2.16_` will run 400 simultaneous calls`
 
 
