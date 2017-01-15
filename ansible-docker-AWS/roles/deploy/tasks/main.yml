@@ -35,7 +35,4 @@
     repo:	https://github.com/jdeglopper/aws-sipp
     dest:	/home/ec2-user/sipp
 
-- name:		Pull Docker image
-  docker_image:
-    name:	deglopper/sipp
     
