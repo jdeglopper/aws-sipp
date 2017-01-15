@@ -13,7 +13,6 @@
   become:	true
   with_items:
     - tcpdump
-    - wireshark
     - git
     - docker
 
@@ -24,3 +23,19 @@
     append:	true
   become:	true
 
+- name:		Start Docker
+  service:
+    name:	docker
+    state:	started
+    enabled:	yes
+  become:	true
+  
+- name:		Clone testing repo
+  git:
+    repo:	https://github.com/jdeglopper/aws-sipp
+    dest:	/home/ec2-user/sipp
+
+- name:		Pull Docker image
+  docker_image:
+    name:	deglopper/sipp
+    
