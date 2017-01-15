@@ -36,7 +36,7 @@ servers for you and avoid having the enter the IP address.
 1. Open at least 3 terminal windows; in one of them, `ssh
 ec2-user@`_client_, and in two others, `ssh ec2-user@`_server_
 
-2. In a terminal window on the server, run `sudo tcpdump -s 512 -w udp.pcap
+2. In a terminal window on the server, run `sudo tcpdump -s 768 -w udp.pcap
 udp` to capture all UDP traffic. 
 
 3. In the second terminal window on the server, run `ifconfig` and note
@@ -68,7 +68,7 @@ client and one as server.
 ec2-user@_client_, and in two others, ssh ec2-user@_server_
 
 2. In a terminal window on the server, run 
-`sudo tcpdump -s 512 -w udp.pcap udp ` to capture all UDP traffic.
+`sudo tcpdump -s 768 -w udp.pcap udp ` to capture all UDP traffic.
 
 3. In the second terminal window on the server, run ifconfig and note
 the network 10 address displayed, for example
@@ -76,10 +76,10 @@ the network 10 address displayed, for example
        >   eth0      Link encap:Ethernet  HWaddr 0E:BE:9C:62:17:56
                  inet addr:10.2.2.16  Bcast:10.2.2.63 Mask:255.255.255.192
 
-4. On the server, `cd aws-sipp/docker/sipp` and run
+4. On the server, `cd sipp/docker/sipp` and run
 `./docker-server.sh`. This will download the image from Docker Hub and run sipp in UAS mode.
 
-5. On the client, `cd aws-sipp/docker/sipp` and run the two scripted
+5. On the client, `cd sipp/docker/sipp` and run the two scripted
 test scenarios, substituting the internal IP address of the server:
 
 `./docker-client-one-call.sh 10.2.2.16` will run a single test call
